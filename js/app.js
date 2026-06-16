@@ -81,7 +81,7 @@ document.addEventListener(
 
 function initApp() {
 
-    bindEvents();
+    bindAppEvents();
 
     showScreen(
         menuScreen
@@ -93,7 +93,7 @@ function initApp() {
 /* EVENTS */
 /* ===================================== */
 
-function bindEvents() {
+function bindAppEvents() {
 
     if (singleBtn) {
 
