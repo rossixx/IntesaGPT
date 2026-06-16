@@ -68,7 +68,6 @@ if (document.readyState === "loading") {
     initGame();
 
 }
-);
 
 function initGame() {
 
@@ -497,6 +496,3 @@ function isDoubleMode() {
     return doubleMode;
 
 }
-
-console.log("GAME INIT");
-initGame();
