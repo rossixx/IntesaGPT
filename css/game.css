@@ -1,0 +1,278 @@
+/* ===================================== */
+/* BANNER */
+/* ===================================== */
+
+#matchBanner {
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 15px 25px;
+
+    border-radius: 15px;
+
+    background:
+
+        rgba(
+            0,
+            0,
+            0,
+            .3
+        );
+
+}
+
+.vs-text {
+
+    color: gold;
+
+    font-weight: bold;
+
+}
+
+/* ===================================== */
+/* ACTIVE TEAM */
+/* ===================================== */
+
+#activeTeamContainer {
+
+    margin-top: 90px;
+
+    font-size: 1.3rem;
+
+}
+
+#activeTeamLabel {
+
+    color: gold;
+
+}
+
+/* ===================================== */
+/* TIMER */
+/* ===================================== */
+
+#timerValue {
+
+    font-size: 6rem;
+
+    font-weight: 900;
+
+    margin-top: 20px;
+
+    text-shadow:
+
+        0 0 15px white,
+
+        0 0 35px #5bc7ff;
+
+}
+
+.timer-warning {
+
+    color: gold;
+
+}
+
+.timer-danger {
+
+    color: red;
+
+}
+
+/* ===================================== */
+/* WORD */
+/* ===================================== */
+
+#wordDisplay {
+
+    width: 80%;
+
+    max-width: 1200px;
+
+    min-height: 220px;
+
+    margin-top: 25px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    border: 4px solid #69cfff;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #0b58bc,
+            #073772
+        );
+
+    font-size: 4rem;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+}
+
+/* ===================================== */
+/* SIDE WORDS */
+/* ===================================== */
+
+#leftWord,
+#rightWord {
+
+    position: absolute;
+
+    top: 50%;
+
+    width: 250px;
+
+    opacity: .2;
+
+    font-size: 2rem;
+
+}
+
+#leftWord {
+
+    left: 20px;
+
+}
+
+#rightWord {
+
+    right: 20px;
+
+}
+
+/* ===================================== */
+/* SCORE PANELS */
+/* ===================================== */
+
+#scorePanels {
+
+    display: flex;
+
+    gap: 25px;
+
+    margin-top: 25px;
+
+}
+
+.team-panel {
+
+    width: 220px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            .08
+        );
+
+}
+
+.team-panel div:last-child {
+
+    font-size: 2rem;
+
+    font-weight: bold;
+
+}
+
+.active-team {
+
+    border: 2px solid gold;
+
+}
+
+/* ===================================== */
+/* CONTROLS */
+/* ===================================== */
+
+.controls {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+}
+
+/* ===================================== */
+/* HISTORY */
+/* ===================================== */
+
+#historyContainer {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    right: 15px;
+
+    width: 280px;
+
+    height: 220px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    background:
+
+        rgba(
+            0,
+            0,
+            0,
+            .25
+        );
+
+}
+
+#historyList {
+
+    list-style: none;
+
+    overflow-y: auto;
+
+    height: 150px;
+
+}
+
+#historyList li {
+
+    padding: 4px 0;
+
+}
