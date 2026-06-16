@@ -488,3 +488,6 @@ function isDoubleMode() {
     return doubleMode;
 
 }
+
+console.log("GAME INIT");
+initGame();
