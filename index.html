@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Intesa Vincente</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/game.css">
+
+    <link
+        rel="stylesheet"
+        href="css/animations.css">
+
+</head>
+
+<body>
+
+    <!-- MENU -->
+
+    <section
+        id="menuScreen"
+        class="screen">
+
+        <h1 class="game-title">
+
+            INTESA VINCENTE
+
+        </h1>
+
+        <div class="menu-buttons">
+
+            <button
+                id="singleBtn"
+                class="main-button">
+
+                GIOCA DA SOLO
+
+            </button>
+
+            <button
+                id="multiBtn"
+                class="main-button">
+
+                MULTIPLAYER
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- SETUP MULTIPLAYER -->
+
+    <section
+        id="setupScreen"
+        class="screen hidden">
+
+        <h2>
+
+            CONFIGURA PARTITA
+
+        </h2>
+
+        <input
+            id="team1Input"
+            type="text"
+            placeholder="Nome Squadra 1">
+
+        <input
+            id="team2Input"
+            type="text"
+            placeholder="Nome Squadra 2">
+
+        <div class="setup-buttons">
+
+            <button
+                id="startMatchBtn"
+                class="main-button">
+
+                INIZIA PARTITA
+
+            </button>
+
+            <button
+                id="backToMenuBtn"
+                class="main-button">
+
+                INDIETRO
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- PARTITA -->
+
+    <section
+        id="gameScreen"
+        class="screen hidden">
+
+        <!-- BANNER -->
+
+        <div id="matchBanner">
+
+            <span id="bannerTeam1">
+
+                Squadra 1
+
+            </span>
+
+            <span id="bannerScore1">
+
+                0
+
+            </span>
+
+            <span class="vs-text">
+
+                VS
+
+            </span>
+
+            <span id="bannerScore2">
+
+                0
+
+            </span>
+
+            <span id="bannerTeam2">
+
+                Squadra 2
+
+            </span>
+
+        </div>
+
+        <!-- TURNO -->
+
+        <div id="activeTeamContainer">
+
+            Turno:
+
+            <span id="activeTeamLabel">
+
+                Squadra 1
+
+            </span>
+
+        </div>
+
+        <!-- TIMER -->
+
+        <div id="timerContainer">
+
+            <div id="timerValue">
+
+                60
+
+            </div>
+
+        </div>
+
+        <!-- PAROLE LATERALI -->
+
+        <div id="leftWord"></div>
+
+        <div id="rightWord"></div>
+
+        <!-- PAROLA -->
+
+        <div id="wordDisplay">
+
+            PREMI NUOVA
+
+        </div>
+
+        <!-- SCORE -->
+
+        <div id="scorePanels">
+
+            <div
+                id="team1Panel"
+                class="team-panel active-team">
+
+                <div id="team1Name">
+
+                    Squadra 1
+
+                </div>
+
+                <div id="team1Score">
+
+                    0
+
+                </div>
+
+            </div>
+
+            <div
+                id="team2Panel"
+                class="team-panel">
+
+                <div id="team2Name">
+
+                    Squadra 2
+
+                </div>
+
+                <div id="team2Score">
+
+                    0
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CONTROLLI -->
+
+        <div class="controls">
+
+            <button
+                id="newWordBtn"
+                class="control-button">
+
+                🎲 NUOVA
+
+            </button>
+
+            <button
+                id="toggleDoubleBtn"
+                class="control-button">
+
+                🔁 RADDOPPIA
+
+            </button>
+
+            <button
+                id="respondBtn"
+                class="control-button">
+
+                🛑 RISPONDI
+
+            </button>
+
+            <button
+                id="correctBtn"
+                class="control-button">
+
+                ✅ GIUSTA
+
+            </button>
+
+            <button
+                id="wrongBtn"
+                class="control-button">
+
+                ❌ SBAGLIATA
+
+            </button>
+
+            <button
+                id="passBtn"
+                class="control-button">
+
+                ⏭ PASSO
+
+            </button>
+
+            <button
+                id="switchTeamBtn"
+                class="control-button">
+
+                🔄 CAMBIA TURNO
+
+            </button>
+
+        </div>
+
+        <!-- STORICO -->
+
+        <div id="historyContainer">
+
+            <h3>
+
+                STORICO
+
+            </h3>
+
+            <ul id="historyList">
+
+            </ul>
+
+        </div>
+
+    </section>
+
+    <!-- VINCITORE -->
+
+    <section
+        id="winnerScreen"
+        class="screen hidden">
+
+        <h2>
+
+            VINCITORE
+
+        </h2>
+
+        <h1 id="winnerName">
+
+        </h1>
+
+        <button
+            id="playAgainBtn"
+            class="main-button">
+
+            NUOVA PARTITA
+
+        </button>
+
+    </section>
+
+    <!-- DATA -->
+
+    <script src="data/words.js"></script>
+    <script src="data/phrases.js"></script>
+
+    <!-- JS -->
+
+    <script src="js/storage.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/multiplayer.js"></script>
+    <script src="js/scoreboard.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
