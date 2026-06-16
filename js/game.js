@@ -72,7 +72,7 @@ if (document.readyState === "loading") {
 
 function initGame() {
 
-    bindEvents();
+    bindGameEvents();
 
     updateDoubleButton();
 
