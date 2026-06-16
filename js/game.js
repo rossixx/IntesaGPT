@@ -82,7 +82,7 @@ function initGame() {
 /* EVENTS */
 /* ===================================== */
 
-function bindEvents() {
+function bindGameEvents() {
 
     if (toggleDoubleBtn) {
 
