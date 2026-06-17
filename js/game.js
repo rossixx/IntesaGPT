@@ -113,13 +113,10 @@ function applyWordLayout() {
 function showWord(word) {
     if (!wordDisplay) return;
 
-    // 1. Rimuoviamo la classe per resettare lo stato
+    // 1. Rimuoviamo la classe per resettare l'animazione
     wordDisplay.classList.remove("wordAppear");
 
-    // 2. IL TRUCCO DEL REFLOW (Forza il browser a resettare l'animazione)
-    void wordDisplay.offsetWidth; 
-
-    // 3. Logica visualizzazione (Singola o Doppia)
+    // 2. Aggiorniamo il contenuto (DOM update)
     const isSides = isMultiplayerMode || singleplayerWordPosition === "sides";
     if (isSides) {
         wordDisplay.innerHTML = `<span class="word-item">${word}</span><span class="word-item">${word}</span>`;
@@ -127,10 +124,12 @@ function showWord(word) {
         wordDisplay.innerHTML = `<span class="word-item">${word}</span>`;
     }
 
-    // 4. Riapplichiamo la classe per far partire l'animazione
-    wordDisplay.classList.add("wordAppear");
+    // 3. Usiamo requestAnimationFrame per far partire l'animazione
+    // Questo garantisce che l'animazione parta SOLO dopo che il testo è stato cambiato
+    requestAnimationFrame(() => {
+        wordDisplay.classList.add("wordAppear");
+    });
 }
-
 /* Interruttore Play/Pausa del Timer */
 function toggleTimerPause() {
     if (isTimerPaused) {
