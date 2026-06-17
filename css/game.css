@@ -296,3 +296,43 @@
 .hidden {
     display: none !important;
 }
+
+
+/* =================================================== */
+/* GESTIONE LAYOUT DINAMICO DELLE PAROLE (GAME.JS)      */
+/* =================================================== */
+
+/* Il container principale deve usare Flexbox per muovere i figli */
+#wordDisplay {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 40px 0;    /* Spazio sopra e sotto la parola */
+    min-height: 80px;  /* Evita che l'interfaccia salti quando la parola è vuota */
+}
+
+/* Quando il gioco è in Singleplayer (Parola al centro) */
+#wordDisplay.words-center {
+    justify-content: center;
+}
+
+/* Quando il gioco è in Multiplayer (Parole sdoppiate ai lati) */
+#wordDisplay.words-sides {
+    justify-content: space-between;
+    padding: 0 8%; /* Spinge le parole verso i bordi. Aumenta o diminuisci la % se le vuoi più vicine/lontane */
+}
+
+/* Stile grafico del box che racchiude la parola */
+.word-item {
+    font-size: 2.5rem;       /* Testo bello grande e leggibile da lontano */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 30px;
+    background-color: #1e1e1e; /* Sfondo scuro del box */
+    color: #ffffff;            /* Colore del testo */
+    border: 3px solid #ffcc00; /* Bordo colorato stile "Intesa Vincente" */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    letter-spacing: 1px;
+}
