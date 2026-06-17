@@ -101,24 +101,21 @@ function bindGlobalKeyEvents() {
 /* ===================================== */
 function setMultiplayer(value) {
     isMultiplayerMode = value;
-    isTimerPaused = false; // Reset dello stato pausa
+    isTimerPaused = false; 
 
-    // Controllo flessibile su più ID comuni per nascondere i nomi delle squadre in Singleplayer
-    const teamContainer = document.getElementById("teamNamesContainer") 
-                       || document.getElementById("turnDisplay") 
-                       || document.getElementById("turno");
-                       
-    if (teamContainer) {
+    // Cerca tutti gli elementi HTML che hanno la classe "multiplayer-only"
+    const multiElements = document.querySelectorAll('.multiplayer-only');
+    
+    multiElements.forEach(el => {
         if (isMultiplayerMode) {
-            teamContainer.classList.remove("hidden");
+            el.classList.remove("hidden");
         } else {
-            teamContainer.classList.add("hidden");
+            el.classList.add("hidden");
         }
-    }
+    });
 
     applyWordLayout();
 }
-
 /* Gestione Spostamento Parole (Lati / Centro) */
 function applyWordLayout() {
     if (!wordDisplay) return;
