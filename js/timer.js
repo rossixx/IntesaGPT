@@ -20,12 +20,22 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ===================================== */
 
 function tick() {
-    if (timerPaused) return;
+    console.log("--- TICKET: Controllo ---");
+    console.log("Stato timerPaused:", timerPaused);
+    console.log("Tempo rimanente:", timeLeft);
+
+    if (timerPaused) {
+        console.log("Tick bloccato: timerPaused è TRUE");
+        return;
+    }
 
     timeLeft--;
+    console.log("Tempo decrementato a:", timeLeft);
+    
     updateTimerDisplay();
 
     if (timeLeft <= 0) {
+        console.log("Tempo scaduto!");
         handleTimeout();
     }
 }
