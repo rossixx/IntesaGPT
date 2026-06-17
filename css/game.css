@@ -276,3 +276,23 @@
     padding: 4px 0;
 
 }
+
+/* Gestione layout delle parole */
+.words-center {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.words-sides {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+/* Classe di utilità per nascondere gli elementi */
+.hidden {
+    display: none !important;
+}
