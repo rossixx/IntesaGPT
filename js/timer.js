@@ -117,3 +117,19 @@ function resetTimer() {
     updateTimerDisplay();
 }
 function getTimeLeft() { return timeLeft; }
+
+/* ===================================== */
+/* PONTE PER GAME.JS */
+/* ===================================== */
+
+// 1. Definiamo la funzione che game.js sta cercando
+function toggleTimerPause() {
+    timerPaused = !timerPaused; // Inverte lo stato (se era true diventa false, e viceversa)
+    console.log("Stato timer (paused):", timerPaused);
+}
+
+// così game.js può vederle senza errori
+window.toggleTimerPause = toggleTimerPause;
+window.startTimer = startTimer;
+window.stopTimer = stopTimer;
+window.resetTimer = resetTimer;
