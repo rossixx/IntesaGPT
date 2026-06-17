@@ -6,9 +6,9 @@ const DEFAULT_TIME = 60;
 
 let timerInterval = null;
 
-let timeLeft = DEFAULT_TIME;
+let timeLeft = 60;
 
-let timerPaused = false;
+let timerPaused = true;
 
 /* ===================================== */
 /* DOM */
