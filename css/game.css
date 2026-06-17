@@ -33,8 +33,15 @@
     margin: 0 10px;
 }
 
-#wordDisplay.words-sides .word-item {
-    transform: rotate(180deg);
+#wordDisplay.words-sides .word-item:nth-child(1) {
+    transform: rotate(-90deg); /* Ruota verso il lato sinistro */
+    margin-right: 50px;       /* Aggiungiamo spazio per non farle toccare */
+}
+
+#wordDisplay.words-sides .word-item:nth-child(2) {
+    transform: rotate(90deg);  /* Ruota verso il lato destro */
+    margin-left: 50px;        /* Aggiungiamo spazio */
+}
 }
 
 /* Punteggi e Turni */
