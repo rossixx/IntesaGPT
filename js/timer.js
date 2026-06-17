@@ -1,7 +1,24 @@
 /* ===================================== */
 /* TIMER.JS */
 /* ===================================== */
+function tick() {
+    console.log("Tick ricevuto! Tempo corrente:", timeLeft); // <--- AGGIUNGI QUESTO
 
+    if (timerPaused) {
+        console.log("Il timer è in pausa, esco."); // <--- AGGIUNGI QUESTO
+        return;
+    }
+
+    timeLeft--;
+    console.log("Tempo decrementato a:", timeLeft); // <--- AGGIUNGI QUESTO
+    
+    updateTimerDisplay();
+
+    if (timeLeft <= 0) {
+        console.log("Tempo scaduto!"); // <--- AGGIUNGI QUESTO
+        handleTimeout();
+    }
+}
 // Variabili globali
 const DEFAULT_TIME = 60;
 let timerInterval = null;
