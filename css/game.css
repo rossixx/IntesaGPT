@@ -33,6 +33,10 @@
     margin: 0 10px;
 }
 
+#wordDisplay.words-sides .word-item {
+    transform: rotate(180deg);
+}
+
 /* Punteggi e Turni */
 .team-score {
     background: #1e3a5f;
