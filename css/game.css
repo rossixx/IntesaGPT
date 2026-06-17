@@ -1,356 +1,63 @@
-/* ===================================== */
-/* BANNER */
-/* ===================================== */
-
-#matchBanner {
-
-    position: absolute;
-
-    top: 15px;
-
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    display: flex;
-
-    gap: 15px;
-
-    padding: 15px 25px;
-
-    border-radius: 15px;
-
-    background:
-
-        rgba(
-            0,
-            0,
-            0,
-            .3
-        );
-
+/* --- SCHERMATA DI GIOCO --- */
+#gameScreen {
+    width: 100%;
 }
 
-.vs-text {
-
-    color: gold;
-
-    font-weight: bold;
-
-}
-
-/* ===================================== */
-/* ACTIVE TEAM */
-/* ===================================== */
-
-#activeTeamContainer {
-
-    margin-top: 90px;
-
-    font-size: 1.3rem;
-
-}
-
-#activeTeamLabel {
-
-    color: gold;
-
-}
-
-/* ===================================== */
-/* TIMER */
-/* ===================================== */
-
-#timerValue {
-
-    font-size: 6rem;
-
-    font-weight: 900;
-
-    margin-top: 20px;
-
-    text-shadow:
-
-        0 0 15px white,
-
-        0 0 35px #5bc7ff;
-
-}
-
-.timer-warning {
-
-    color: gold;
-
-}
-
-.timer-danger {
-
-    color: red;
-
-}
-
-/* ===================================== */
-/* WORD */
-/* ===================================== */
-
+/* Container parole */
 #wordDisplay {
-
-    width: 80%;
-
-    max-width: 1200px;
-
-    min-height: 220px;
-
-    margin-top: 25px;
-
     display: flex;
-
-    justify-content: center;
+    justify-content: center; /* Default centrato */
     align-items: center;
-
-    text-align: center;
-
-    border-radius: 20px;
-
-    border: 4px solid #69cfff;
-
-    background:
-
-        linear-gradient(
-            180deg,
-            #0b58bc,
-            #073772
-        );
-
-    font-size: 4rem;
-
-    font-weight: 900;
-
-    letter-spacing: 4px;
-
-    text-transform: uppercase;
-
-}
-
-/* ===================================== */
-/* SIDE WORDS */
-/* ===================================== */
-
-#leftWord,
-#rightWord {
-
-    position: absolute;
-
-    top: 50%;
-
-    width: 250px;
-
-    opacity: .2;
-
-    font-size: 2rem;
-
-}
-
-#leftWord {
-
-    left: 20px;
-
-}
-
-#rightWord {
-
-    right: 20px;
-
-}
-
-/* ===================================== */
-/* SCORE PANELS */
-/* ===================================== */
-
-#scorePanels {
-
-    display: flex;
-
-    gap: 25px;
-
-    margin-top: 25px;
-
-}
-
-.team-panel {
-
-    width: 220px;
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    text-align: center;
-
-    background:
-
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
-
-}
-
-.team-panel div:last-child {
-
-    font-size: 2rem;
-
-    font-weight: bold;
-
-}
-
-.active-team {
-
-    border: 2px solid gold;
-
-}
-
-/* ===================================== */
-/* CONTROLS */
-/* ===================================== */
-
-.controls {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    margin-top: 25px;
-
-}
-
-/* ===================================== */
-/* HISTORY */
-/* ===================================== */
-
-#historyContainer {
-
-    position: absolute;
-
-    bottom: 15px;
-
-    right: 15px;
-
-    width: 280px;
-
-    height: 220px;
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    background:
-
-        rgba(
-            0,
-            0,
-            0,
-            .25
-        );
-
-}
-
-#historyList {
-
-    list-style: none;
-
-    overflow-y: auto;
-
-    height: 150px;
-
-}
-
-#historyList li {
-
-    padding: 4px 0;
-
-}
-
-/* Gestione layout delle parole */
-.words-center {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.words-sides {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
-    padding: 0 40px;
-    box-sizing: border-box;
+    margin: 30px 0;
+    min-height: 100px;
 }
 
-/* Classe di utilità per nascondere gli elementi */
-.hidden {
-    display: none !important;
-}
-
-
-/* =================================================== */
-/* GESTIONE LAYOUT DINAMICO DELLE PAROLE (GAME.JS)      */
-/* =================================================== */
-
-/* Il container principale deve usare Flexbox per muovere i figli */
-#wordDisplay {
-    display: flex;
-    width: 100%;
-    box-sizing: border-box;
-    margin: 40px 0;    /* Spazio sopra e sotto la parola */
-    min-height: 80px;  /* Evita che l'interfaccia salti quando la parola è vuota */
-}
-
-/* Quando il gioco è in Singleplayer (Parola al centro) */
-#wordDisplay.words-center {
-    justify-content: center;
-}
-
-/* Quando il gioco è in Multiplayer (Parole sdoppiate ai lati) */
+/* Quando è Multiplayer, usa space-between */
 #wordDisplay.words-sides {
     justify-content: space-between;
-    padding: 0 8%; /* Spinge le parole verso i bordi. Aumenta o diminuisci la % se le vuoi più vicine/lontane */
-
+    padding: 0 5%;
 }
 
-/* Rotazione 3D aggressiva per le parole in Multiplayer */
-#wordDisplay.multiplayer-rotate .word-item:first-child {
-    transform: perspective(1000px) rotateY(45deg) !important;
-    transform-origin: left center !important;
-    display: inline-block !important;
-}
-
-#wordDisplay.multiplayer-rotate .word-item:last-child {
-    transform: perspective(1000px) rotateY(-45deg) !important;
-    transform-origin: right center !important;
-    display: inline-block !important;
-}
-
-/* Stile grafico del box che racchiude la parola */
+/* Lo stile delle "carte" (gli elementi parola) */
 .word-item {
-    font-size: 2.5rem;       /* Testo bello grande e leggibile da lontano */
+    background: #112240;
+    border: 2px solid #64ffda; /* Colore stile "Intesa" */
+    color: #64ffda;
+    padding: 20px 30px;
+    border-radius: 8px;
+    font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
-    padding: 12px 30px;
-    background-color: #1e1e1e; /* Sfondo scuro del box */
-    color: #ffffff;            /* Colore del testo */
-    border: 3px solid #ffcc00; /* Bordo colorato stile "Intesa Vincente" */
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    display: inline-block;
-    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    margin: 0 10px;
 }
 
-.hidden {
-    display: none !important;
+/* Punteggi e Turni */
+.team-score {
+    background: #1e3a5f;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
+    display: inline-block;
+    min-width: 150px;
+}
+
+/* Pulsanti */
+.controls {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #64ffda;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #0a192f;
 }
