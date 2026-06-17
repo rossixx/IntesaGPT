@@ -1,55 +1,22 @@
 /* ===================================== */
-/* TIMER.JS */
+/* TIMER.JS - Versione Completa e Corretta */
 /* ===================================== */
-function tick() {
-    console.log("Tick ricevuto! Tempo corrente:", timeLeft); // <--- AGGIUNGI QUESTO
 
-    if (timerPaused) {
-        console.log("Il timer è in pausa, esco."); // <--- AGGIUNGI QUESTO
-        return;
-    }
-
-    timeLeft--;
-    console.log("Tempo decrementato a:", timeLeft); // <--- AGGIUNGI QUESTO
-    
-    updateTimerDisplay();
-
-    if (timeLeft <= 0) {
-        console.log("Tempo scaduto!"); // <--- AGGIUNGI QUESTO
-        handleTimeout();
-    }
-}
-// Variabili globali
+// Variabili globali interne
 const DEFAULT_TIME = 60;
 let timerInterval = null;
 let timeLeft = 60;
 let timerPaused = true;
-let timerValue = null; // Dichiarata come null all'inizio
+let timerValue = null;
 
-document.addEventListener("DOMContentLoaded", function() {
-    initTimerModule(); 
+// Assicuriamoci che il DOM sia pronto prima di cercare l'elemento
+document.addEventListener("DOMContentLoaded", () => {
+    timerValue = document.getElementById("timerValue");
+    console.log("Timer.js: Inizializzazione completata. Elemento trovato:", !!timerValue);
 });
 
-function initTimerModule() {
-    // Ora che il DOM è pronto, cerchiamo l'elemento
-    timerValue = document.getElementById("timerValue");
-    console.log("Timer inizializzato correttamente.");
-}
-
 /* ===================================== */
-/* START */
-/* ===================================== */
-
-function startTimer() {
-    stopTimer();
-    timeLeft = DEFAULT_TIME;
-    timerPaused = false;
-    updateTimerDisplay();
-    timerInterval = setInterval(tick, 1000);
-}
-
-/* ===================================== */
-/* TICK */
+/* LOGICA INTERNA */
 /* ===================================== */
 
 function tick() {
@@ -63,73 +30,62 @@ function tick() {
     }
 }
 
-/* ===================================== */
-/* TIMEOUT */
-/* ===================================== */
-
 function handleTimeout() {
     stopTimer();
-    let winner = "Partita Terminata";
-    if (typeof getWinnerName === "function") {
-        winner = getWinnerName();
-    }
+    // Verifica se esistono funzioni globali per finire il gioco
     if (typeof endGame === "function") {
+        let winner = (typeof getWinnerName === "function") ? getWinnerName() : "Tempo scaduto";
         endGame(winner);
     }
 }
 
-/* ===================================== */
-/* UPDATE UI */
-/* ===================================== */
-
 function updateTimerDisplay() {
-    // Se timerValue non è stato ancora trovato, non fare nulla
     if (!timerValue) return;
-
+    
     timerValue.textContent = timeLeft;
 
+    // Reset classi CSS
     timerValue.classList.remove("timer-warning", "timer-danger");
 
-    if (timeLeft <= 20 && timeLeft > 10) {
-        timerValue.classList.add("timer-warning");
-    }
-
+    // Logica colori
     if (timeLeft <= 10) {
         timerValue.classList.add("timer-danger");
+    } else if (timeLeft <= 20) {
+        timerValue.classList.add("timer-warning");
     }
 }
 
 /* ===================================== */
-/* FUNZIONI DI CONTROLLO */
+/* API PUBBLICA (Esposta per game.js) */
 /* ===================================== */
 
-function pauseTimer() { timerPaused = true; }
-function resumeTimer() { timerPaused = false; }
-function stopTimer() {
+window.startTimer = function() {
+    console.log("Timer: Avvio richiesto");
+    window.stopTimer(); // Pulisci sempre prima di partire
+    timeLeft = DEFAULT_TIME;
+    timerPaused = false;
+    updateTimerDisplay();
+    timerInterval = setInterval(tick, 1000);
+};
+
+window.stopTimer = function() {
     if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
     }
-}
-function resetTimer() {
-    stopTimer();
+};
+
+window.toggleTimerPause = function() {
+    timerPaused = !timerPaused;
+    console.log("Timer: toggle (pausa è ora: " + timerPaused + ")");
+};
+
+window.resetTimer = function() {
+    window.stopTimer();
     timeLeft = DEFAULT_TIME;
     updateTimerDisplay();
-}
-function getTimeLeft() { return timeLeft; }
+};
 
-/* ===================================== */
-/* PONTE PER GAME.JS */
-/* ===================================== */
-
-// 1. Definiamo la funzione che game.js sta cercando
-function toggleTimerPause() {
-    timerPaused = !timerPaused; // Inverte lo stato (se era true diventa false, e viceversa)
-    console.log("Stato timer (paused):", timerPaused);
-}
-
-// così game.js può vederle senza errori
-window.toggleTimerPause = toggleTimerPause;
-window.startTimer = startTimer;
-window.stopTimer = stopTimer;
-window.resetTimer = resetTimer;
+window.getTimeLeft = function() {
+    return timeLeft;
+};
