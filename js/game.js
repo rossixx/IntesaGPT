@@ -140,7 +140,7 @@ function applyWordLayout() {
 /* ===================================== */
 /* DISPLAY */
 /* ===================================== */
-function showWord(word) {
+function showWord(word) 
     // Assicurati che 'wordDisplay' sia l'ID corretto nel tuo HTML
     const wordElement = document.getElementById("wordDisplay");
 
