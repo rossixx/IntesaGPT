@@ -6,9 +6,9 @@ let doubleMode = false;
 let usedWords = [];
 let currentWord = "";
 
-// Nuove variabili di stato per le feature richieste
+// Variabili di stato per le feature dinamiche
 let isMultiplayerMode = false;
-let singleplayerWordPosition = "center"; 
+let singleplayerWordPosition = "center"; // Centro di default in singleplayer
 let isTimerPaused = false;
 
 /* ===================================== */
@@ -34,10 +34,10 @@ if (document.readyState === "loading") {
 
 function initGame() {
     bindGameEvents();
-    bindGlobalKeyEvents(); // Inizializza l'ascolto dello spazio
+    bindGlobalKeyEvents(); 
     updateDoubleButton();
 
-    // Rileva il cambio di posizione dal menu (se hai aggiunto la select nell'HTML)
+    // Rileva il cambio di posizione dal menu (se hai aggiunto la select con questo ID)
     const positionSelect = document.getElementById("wordPositionSelect");
     if (positionSelect) {
         singleplayerWordPosition = positionSelect.value;
@@ -81,15 +81,15 @@ function bindGameEvents() {
 function bindGlobalKeyEvents() {
     window.addEventListener("keydown", (e) => {
         if (e.code === "Space") {
-            // Se l'utente sta digitando un nome di una squadra negli input, lo spazio deve funzionare normalmente
+            // Se l'utente scrive negli input dei nomi, la barra spaziatrice deve fare uno spazio normale
             if (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA") {
                 return;
             }
 
             const gameScreenEl = document.getElementById("gameScreen");
-            // Gestisce la pausa solo se la schermata di gioco è attualmente visibile attiva
+            // Gestisce la pausa solo se la schermata di gioco è visibile
             if (gameScreenEl && !gameScreenEl.classList.contains("hidden")) {
-                e.preventDefault(); // Blocca lo scroll della pagina verso il basso
+                e.preventDefault(); // Evita lo scroll della pagina indotto dal tasto spazio
                 toggleTimerPause();
             }
         }
@@ -101,11 +101,13 @@ function bindGlobalKeyEvents() {
 /* ===================================== */
 function setMultiplayer(value) {
     isMultiplayerMode = value;
-    isTimerPaused = false; // Reset dello stato di pausa ad ogni nuova partita
+    isTimerPaused = false; // Reset dello stato pausa
 
-    // Gestione Feature: Mostra/Nascondi Nomi Squadra
-    // Nota: Cerca un id comune come teamNamesContainer o turnDisplay. Cambialo se usi un id diverso nell'HTML.
-    const teamContainer = document.getElementById("teamNamesContainer") || document.getElementById("turnDisplay");
+    // Controllo flessibile su più ID comuni per nascondere i nomi delle squadre in Singleplayer
+    const teamContainer = document.getElementById("teamNamesContainer") 
+                       || document.getElementById("turnDisplay") 
+                       || document.getElementById("turno");
+                       
     if (teamContainer) {
         if (isMultiplayerMode) {
             teamContainer.classList.remove("hidden");
@@ -117,41 +119,37 @@ function setMultiplayer(value) {
     applyWordLayout();
 }
 
-/* Gestione Feature: Spostamento Parole (Lati / Centro) */
+/* Gestione Spostamento Parole (Lati / Centro) */
 function applyWordLayout() {
     if (!wordDisplay) return;
 
-    // Prende il container genitore delle parole (es. wordsContainer)
-    const container = document.getElementById("wordsContainer") || wordDisplay.parentElement;
-    if (!container) return;
+    wordDisplay.classList.remove("words-sides", "words-center");
 
-    container.classList.remove("words-sides", "words-center");
-
-    if (isMultiplayerMode) {
-        container.classList.add("words-sides"); // Sempre ai lati in multi
+    // Se siamo in multi o se l'utente ha forzato "ai lati" in singleplayer
+    if (isMultiplayerMode || singleplayerWordPosition === "sides") {
+        wordDisplay.classList.add("words-sides");
     } else {
-        if (singleplayerWordPosition === "sides") {
-            container.classList.add("words-sides");
-        } else {
-            container.classList.add("words-center"); // Centro in singleplayer di base
-        }
+        wordDisplay.classList.add("words-center");
+    }
+    
+    // Se c'è già una parola a schermo, riesegui il rendering per sdoppiarla/accentrarla subito
+    if (currentWord) {
+        showWord(currentWord);
     }
 }
 
-/* Gestione Feature: Interruttore Play/Pausa del Timer */
+/* Interruttore Play/Pausa del Timer */
 function toggleTimerPause() {
     if (isTimerPaused) {
         if (typeof resumeTimer === "function") {
             resumeTimer();
         }
         isTimerPaused = false;
-        console.log("Gioco Ripreso");
     } else {
         if (typeof pauseTimer === "function") {
             pauseTimer();
         }
         isTimerPaused = true;
-        console.log("Gioco in Pausa");
     }
 }
 
@@ -159,7 +157,6 @@ function toggleTimerPause() {
 /* WORD POOL */
 /* ===================================== */
 function getCurrentPool() {
-    // Sicurezza anti-bug: controlliamo che i vettori globali esistano prima di leggerli
     if (doubleMode) {
         return typeof phrases !== "undefined" ? phrases : [];
     }
@@ -199,14 +196,20 @@ function newWord() {
 /* DISPLAY */
 /* ===================================== */
 function showWord(word) {
-    if (!wordDisplay) {
-        return;
-    }
+    if (!wordDisplay) return;
 
     wordDisplay.classList.remove("wordAppear");
-    void wordDisplay.offsetWidth; // Forza il reflow grafico per far resettare le animazioni CSS
+    void wordDisplay.offsetWidth; // Trigger di reflow hardware per resettare le animazioni CSS
 
-    wordDisplay.textContent = word;
+    // Se siamo ai lati sdoppiamo la stringa in due span separati, altrimenti ne usiamo uno solo al centro
+    const isSides = isMultiplayerMode || singleplayerWordPosition === "sides";
+
+    if (isSides) {
+        wordDisplay.innerHTML = `<span class="word-item">${word}</span><span class="word-item">${word}</span>`;
+    } else {
+        wordDisplay.innerHTML = `<span class="word-item">${word}</span>`;
+    }
+
     wordDisplay.classList.add("wordAppear");
 }
 
@@ -300,9 +303,7 @@ function handleWrong() {
 /* EFFECTS */
 /* ===================================== */
 function flashCorrect() {
-    if (!wordDisplay) {
-        return;
-    }
+    if (!wordDisplay) return;
 
     wordDisplay.classList.add("correctFlash");
 
@@ -312,9 +313,7 @@ function flashCorrect() {
 }
 
 function flashWrong() {
-    if (!wordDisplay) {
-        return;
-    }
+    if (!wordDisplay) return;
 
     wordDisplay.classList.add("wrongFlash");
 
