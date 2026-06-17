@@ -6,11 +6,11 @@
 /* Container parole */
 #wordDisplay {
     display: flex;
-    justify-content: center; /* Default centrato */
+    justify-content: center;
     align-items: center;
     width: 100%;
+    min-height: 300px; 
     margin: 30px 0;
-    min-height: 100px;
 }
 
 /* Quando è Multiplayer, usa space-between */
