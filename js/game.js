@@ -123,21 +123,42 @@ function setMultiplayer(value) {
 function applyWordLayout() {
     if (!wordDisplay) return;
 
-    wordDisplay.classList.remove("words-sides", "words-center");
+    // Rimuoviamo tutte le classi di layout per fare pulizia
+    wordDisplay.classList.remove("words-sides", "words-center", "multiplayer-rotate");
 
-    // Se siamo in multi o se l'utente ha forzato "ai lati" in singleplayer
-    if (isMultiplayerMode || singleplayerWordPosition === "sides") {
-        wordDisplay.classList.add("words-sides");
+    if (isMultiplayerMode) {
+        // Multiplayer: Ai lati e ruotate (2 parole)
+        wordDisplay.classList.add("words-sides", "multiplayer-rotate");
     } else {
+        // Singleplayer: Al centro e piatte (1 parola)
         wordDisplay.classList.add("words-center");
     }
     
-    // Se c'è già una parola a schermo, riesegui il rendering per sdoppiarla/accentrarla subito
+    // Rinfresca la visualizzazione della parola se già a schermo
     if (currentWord) {
         showWord(currentWord);
     }
 }
 
+/* ===================================== */
+/* DISPLAY */
+/* ===================================== */
+function showWord(word) {
+    if (!wordDisplay) return;
+
+    wordDisplay.classList.remove("wordAppear");
+    void wordDisplay.offsetWidth; // Trigger di reflow hardware per resettare animazioni
+
+    if (isMultiplayerMode) {
+        // In Multiplayer sdoppiamo la stringa
+        wordDisplay.innerHTML = `<span class="word-item">${word}</span><span class="word-item">${word}</span>`;
+    } else {
+        // In Singleplayer ne mostriamo solo una
+        wordDisplay.innerHTML = `<span class="word-item">${word}</span>`;
+    }
+
+    wordDisplay.classList.add("wordAppear");
+}
 /* Interruttore Play/Pausa del Timer */
 function toggleTimerPause() {
     if (isTimerPaused) {
