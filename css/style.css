@@ -1,197 +1,29 @@
-/* ===================================== */
-/* RESET */
-/* ===================================== */
-
+/* Base e Reset */
 * {
-
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-
-}
-
-html,
-body {
-
-    width: 100%;
-    height: 100%;
-
 }
 
 body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #0f4fa8 0%,
-            #072a59 45%,
-            #02152d 100%
-        );
-
-    color: white;
-
-    overflow: hidden;
-
-}
-
-/* ===================================== */
-/* SCREEN */
-/* ===================================== */
-
-.screen {
-
-    width: 100%;
-    height: 100vh;
-
+    background-color: #0a192f; /* Blu scurissimo */
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-
-    justify-content: center;
     align-items: center;
-
+    padding: 20px;
 }
 
+/* Classe utilità fondamentale per nascondere elementi */
 .hidden {
-
     display: none !important;
-
 }
 
-/* ===================================== */
-/* TITLES */
-/* ===================================== */
-
-.game-title {
-
-    font-size: 5rem;
-
-    font-weight: 900;
-
-    letter-spacing: 4px;
-
-    margin-bottom: 50px;
-
-    text-shadow:
-
-        0 0 10px white,
-
-        0 0 20px #5bc7ff,
-
-        0 0 40px #5bc7ff;
-
-}
-
-h2 {
-
-    margin-bottom: 25px;
-
-}
-
-/* ===================================== */
-/* BUTTONS */
-/* ===================================== */
-
-.main-button,
-.control-button {
-
-    border: none;
-
-    cursor: pointer;
-
-    color: white;
-
-    font-weight: bold;
-
-}
-
-.main-button {
-
-    width: 300px;
-
-    padding: 18px;
-
-    margin: 10px;
-
-    border-radius: 12px;
-
-    font-size: 1.1rem;
-
-    background:
-
-        linear-gradient(
-            180deg,
-            #31a8ff,
-            #0f5fd3
-        );
-
-}
-
-.main-button:hover {
-
-    transform: scale(1.04);
-
-}
-
-.control-button {
-
-    padding: 14px 20px;
-
-    border-radius: 10px;
-
-    background:
-
-        linear-gradient(
-            180deg,
-            #1578ff,
-            #0b4cb1
-        );
-
-}
-
-/* ===================================== */
-/* INPUT */
-/* ===================================== */
-
-input {
-
-    width: 320px;
-
-    padding: 14px;
-
-    margin: 10px;
-
-    border-radius: 10px;
-
-    border: 2px solid #58c8ff;
-
-    background:
-
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
-
-    color: white;
-
+/* Container generico per le schermate */
+.screen-container {
+    width: 100%;
+    max-width: 800px;
     text-align: center;
-
-}
-
-input::placeholder {
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .6
-        );
-
 }
