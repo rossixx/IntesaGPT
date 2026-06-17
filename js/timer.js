@@ -1,63 +1,31 @@
 /* ===================================== */
-/* TIMER.JS - Versione Completa e Corretta */
+/* TIMER.JS - Versione "Cerca-sempre"    */
 /* ===================================== */
 
-// Variabili globali interne
+// Variabili globali
 const DEFAULT_TIME = 60;
 let timerInterval = null;
 let timeLeft = 60;
 let timerPaused = true;
-let timerValue = null;
-
-// Assicuriamoci che il DOM sia pronto prima di cercare l'elemento
-document.addEventListener("DOMContentLoaded", () => {
-    timerValue = document.getElementById("timerValue");
-    console.log("Timer.js: Inizializzazione completata. Elemento trovato:", !!timerValue);
-});
 
 /* ===================================== */
-/* LOGICA INTERNA */
+/* LOGICA DI AGGIORNAMENTO UI */
 /* ===================================== */
 
-function tick() {
-    console.log("--- TICKET: Controllo ---");
-    console.log("Stato timerPaused:", timerPaused);
-    console.log("Tempo rimanente:", timeLeft);
+function updateTimerDisplay() {
+    // Cerchiamo l'elemento ogni volta che dobbiamo aggiornare.
+    // Così siamo sicuri di scrivere nell'HTML corretto.
+    const timerValue = document.getElementById("timerValue");
 
-    if (timerPaused) {
-        console.log("Tick bloccato: timerPaused è TRUE");
+    if (!timerValue) {
+        console.warn("⚠️ ERRORE: Elemento con id='timerValue' non trovato nell'HTML!");
         return;
     }
 
-    timeLeft--;
-    console.log("Tempo decrementato a:", timeLeft);
-    
-    updateTimerDisplay();
-
-    if (timeLeft <= 0) {
-        console.log("Tempo scaduto!");
-        handleTimeout();
-    }
-}
-
-function handleTimeout() {
-    stopTimer();
-    // Verifica se esistono funzioni globali per finire il gioco
-    if (typeof endGame === "function") {
-        let winner = (typeof getWinnerName === "function") ? getWinnerName() : "Tempo scaduto";
-        endGame(winner);
-    }
-}
-
-function updateTimerDisplay() {
-    if (!timerValue) return;
-    
     timerValue.textContent = timeLeft;
 
-    // Reset classi CSS
+    // Gestione colori
     timerValue.classList.remove("timer-warning", "timer-danger");
-
-    // Logica colori
     if (timeLeft <= 10) {
         timerValue.classList.add("timer-danger");
     } else if (timeLeft <= 20) {
@@ -66,12 +34,41 @@ function updateTimerDisplay() {
 }
 
 /* ===================================== */
-/* API PUBBLICA (Esposta per game.js) */
+/* LOGICA INTERNA */
+/* ===================================== */
+
+function tick() {
+    if (timerPaused) return;
+
+    timeLeft--;
+    
+    // Aggiorniamo la UI
+    updateTimerDisplay();
+
+    // Debug: se vedi questo nella console ma non sullo schermo, 
+    // allora il problema è nel tuo HTML/CSS, non nel JavaScript!
+    console.log("Timer ticking:", timeLeft);
+
+    if (timeLeft <= 0) {
+        handleTimeout();
+    }
+}
+
+function handleTimeout() {
+    window.stopTimer();
+    if (typeof endGame === "function") {
+        let winner = (typeof getWinnerName === "function") ? getWinnerName() : "Partita Terminata";
+        endGame(winner);
+    }
+}
+
+/* ===================================== */
+/* API PUBBLICHE (Per game.js) */
 /* ===================================== */
 
 window.startTimer = function() {
     console.log("Timer: Avvio richiesto");
-    window.stopTimer(); // Pulisci sempre prima di partire
+    window.stopTimer(); 
     timeLeft = DEFAULT_TIME;
     timerPaused = false;
     updateTimerDisplay();
@@ -87,7 +84,7 @@ window.stopTimer = function() {
 
 window.toggleTimerPause = function() {
     timerPaused = !timerPaused;
-    console.log("Timer: toggle (pausa è ora: " + timerPaused + ")");
+    console.log("Timer: pausa impostata a", timerPaused);
 };
 
 window.resetTimer = function() {
