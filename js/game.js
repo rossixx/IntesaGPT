@@ -141,18 +141,22 @@ function applyWordLayout() {
 /* DISPLAY */
 /* ===================================== */
 function showWord(word) {
-    if (!wordDisplay) return;
+    // Assicurati che 'wordDisplay' sia l'ID corretto nel tuo HTML
+    const wordElement = document.getElementById("wordDisplay");
 
-    wordDisplay.classList.remove("wordAppear");
-    void wordDisplay.offsetWidth; // Trigger di reflow hardware per resettare animazioni
+    // 1. Rimuoviamo la classe dell'animazione per resettare lo stato
+    wordElement.classList.remove("fade-in");
 
-    if (isMultiplayerMode) {
-        // In Multiplayer sdoppiamo la stringa
-        wordDisplay.innerHTML = `<span class="word-item">${word}</span><span class="word-item">${word}</span>`;
-    } else {
-        // In Singleplayer ne mostriamo solo una
-        wordDisplay.innerHTML = `<span class="word-item">${word}</span>`;
-    }
+    // 2. Aggiorniamo il testo con la parola passata alla funzione
+    wordElement.textContent = word;
+
+    // 3. IL TRUCCO DEL REFLOW
+    // Obblighiamo il browser a ricalcolare l'elemento per "dimenticare" l'animazione precedente
+    void wordElement.offsetWidth;
+
+    // 4. Riapplichiamo la classe: ora l'animazione riparte fluidamente
+    wordElement.classList.add("fade-in");
+}
 
     wordDisplay.classList.add("wordAppear");
 }
