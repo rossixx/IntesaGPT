@@ -1,463 +1,205 @@
 /* ===================================== */
-/* APP.JS */
+/* APP.JS - Gestione Schermate e Flusso  */
 /* ===================================== */
 
-const menuScreen =
-    document.getElementById(
-        "menuScreen"
-    );
-
-const setupScreen =
-    document.getElementById(
-        "setupScreen"
-    );
-
-const gameScreen =
-    document.getElementById(
-        "gameScreen"
-    );
-
-const winnerScreen =
-    document.getElementById(
-        "winnerScreen"
-    );
+const menuScreen = document.getElementById("menuScreen");
+const setupScreen = document.getElementById("setupScreen");
+const gameScreen = document.getElementById("gameScreen");
+const winnerScreen = document.getElementById("winnerScreen");
 
 /* ===================================== */
 /* BUTTONS */
 /* ===================================== */
-
-const singleBtn =
-    document.getElementById(
-        "singleBtn"
-    );
-
-const multiBtn =
-    document.getElementById(
-        "multiBtn"
-    );
-
-const startMatchBtn =
-    document.getElementById(
-        "startMatchBtn"
-    );
-
-const backToMenuBtn =
-    document.getElementById(
-        "backToMenuBtn"
-    );
-
-const playAgainBtn =
-    document.getElementById(
-        "playAgainBtn"
-    );
+const singleBtn = document.getElementById("singleBtn");
+const multiBtn = document.getElementById("multiBtn");
+const startMatchBtn = document.getElementById("startMatchBtn");
+const backToMenuBtn = document.getElementById("backToMenuBtn");
+const playAgainBtn = document.getElementById("playAgainBtn");
 
 /* ===================================== */
 /* INPUTS */
 /* ===================================== */
-
-const team1Input =
-    document.getElementById(
-        "team1Input"
-    );
-
-const team2Input =
-    document.getElementById(
-        "team2Input"
-    );
-
-const winnerName =
-    document.getElementById(
-        "winnerName"
-    );
+const team1Input = document.getElementById("team1Input");
+const team2Input = document.getElementById("team2Input");
+const winnerName = document.getElementById("winnerName");
 
 /* ===================================== */
 /* INIT */
 /* ===================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initApp
-);
+document.addEventListener("DOMContentLoaded", initApp);
 
 function initApp() {
-
     bindAppEvents();
-
-    showScreen(
-        menuScreen
-    );
-
+    showScreen(menuScreen);
 }
 
 /* ===================================== */
 /* EVENTS */
 /* ===================================== */
-
 function bindAppEvents() {
-
     if (singleBtn) {
-
-        singleBtn.addEventListener(
-            "click",
-            startSinglePlayer
-        );
-
+        singleBtn.addEventListener("click", startSinglePlayer);
     }
 
     if (multiBtn) {
-
-        multiBtn.addEventListener(
-            "click",
-            openMultiplayerSetup
-        );
-
+        multiBtn.addEventListener("click", openMultiplayerSetup);
     }
 
     if (startMatchBtn) {
-
-        startMatchBtn.addEventListener(
-            "click",
-            startMultiplayerGame
-        );
-
+        startMatchBtn.addEventListener("click", startMultiplayerGame);
     }
 
     if (backToMenuBtn) {
-
-        backToMenuBtn.addEventListener(
-            "click",
-            backToMenu
-        );
-
+        backToMenuBtn.addEventListener("click", backToMenu);
     }
 
     if (playAgainBtn) {
-
-        playAgainBtn.addEventListener(
-            "click",
-            playAgain
-        );
-
+        playAgainBtn.addEventListener("click", playAgain);
     }
-
 }
 
 /* ===================================== */
 /* SCREENS */
 /* ===================================== */
-
 function showScreen(target) {
+    if (menuScreen) menuScreen.classList.add("hidden");
+    if (setupScreen) setupScreen.classList.add("hidden");
+    if (gameScreen) gameScreen.classList.add("hidden");
+    if (winnerScreen) winnerScreen.classList.add("hidden");
 
-    if (menuScreen)
-        menuScreen.classList.add(
-            "hidden"
-        );
-
-    if (setupScreen)
-        setupScreen.classList.add(
-            "hidden"
-        );
-
-    if (gameScreen)
-        gameScreen.classList.add(
-            "hidden"
-        );
-
-    if (winnerScreen)
-        winnerScreen.classList.add(
-            "hidden"
-        );
-
-    if (target)
-        target.classList.remove(
-            "hidden"
-        );
-
+    if (target) target.classList.remove("hidden");
 }
 
 /* ===================================== */
 /* FULLSCREEN */
 /* ===================================== */
-
 function enterFullscreen() {
-
-    const el =
-        document.documentElement;
-
-    if (
-        el.requestFullscreen
-    ) {
-
-        el.requestFullscreen();
-
+    const el = document.documentElement;
+    if (el.requestFullscreen) {
+        el.requestFullscreen().catch(err => {
+            console.log("Impossibile avviare il fullscreen di default: ", err);
+        });
     }
-
 }
 
 /* ===================================== */
 /* SINGLEPLAYER */
 /* ===================================== */
-
 function startSinglePlayer() {
-
-    if (
-        typeof setMultiplayer ===
-        "function"
-    ) {
-
-        setMultiplayer(
-            false
-        );
-
+    if (typeof setMultiplayer === "function") {
+        setMultiplayer(false);
     }
 
-    if (
-        typeof resetScores ===
-        "function"
-    ) {
-
+    if (typeof resetScores === "function") {
         resetScores();
-
     }
 
-    if (
-        typeof resetGameData ===
-        "function"
-    ) {
-
+    if (typeof resetGameData === "function") {
         resetGameData();
-
     }
 
-    showScreen(
-        gameScreen
-    );
-
+    showScreen(gameScreen);
     enterFullscreen();
 
-    if (
-        typeof startTimer ===
-        "function"
-    ) {
-
+    if (typeof startTimer === "function") {
         startTimer();
-
     }
 
-    if (
-        typeof newWord ===
-        "function"
-    ) {
-
+    if (typeof newWord === "function") {
         newWord();
-
     }
-
 }
 
 /* ===================================== */
 /* MULTIPLAYER */
 /* ===================================== */
-
 function openMultiplayerSetup() {
-
-    showScreen(
-        setupScreen
-    );
-
+    showScreen(setupScreen);
 }
 
 function startMultiplayerGame() {
+    let team1 = team1Input ? team1Input.value.trim() : "";
+    let team2 = team2Input ? team2Input.value.trim() : "";
 
-    let team1 =
-        team1Input
-            ? team1Input.value.trim()
-            : "";
+    if (!team1) team1 = "Squadra 1";
+    if (!team2) team2 = "Squadra 2";
 
-    let team2 =
-        team2Input
-            ? team2Input.value.trim()
-            : "";
-
-    if (!team1)
-        team1 =
-            "Squadra 1";
-
-    if (!team2)
-        team2 =
-            "Squadra 2";
-
-    if (
-        typeof setMultiplayer ===
-        "function"
-    ) {
-
-        setMultiplayer(
-            true
-        );
-
+    if (typeof setMultiplayer === "function") {
+        setMultiplayer(true);
     }
 
-    if (
-        typeof setTeamNames ===
-        "function"
-    ) {
-
-        setTeamNames(
-            team1,
-            team2
-        );
-
+    if (typeof setTeamNames === "function") {
+        setTeamNames(team1, team2);
     }
 
-    if (
-        typeof resetScores ===
-        "function"
-    ) {
-
+    if (typeof resetScores === "function") {
         resetScores();
-
     }
 
-    if (
-        typeof resetTeams ===
-        "function"
-    ) {
-
+    if (typeof resetTeams === "function") {
         resetTeams();
-
     }
 
-    if (
-        typeof resetGameData ===
-        "function"
-    ) {
-
+    if (typeof resetGameData === "function") {
         resetGameData();
-
     }
 
-    showScreen(
-        gameScreen
-    );
-
+    showScreen(gameScreen);
     enterFullscreen();
 
-    if (
-        typeof startTimer ===
-        "function"
-    ) {
-
+    if (typeof startTimer === "function") {
         startTimer();
-
     }
 
-    if (
-        typeof newWord ===
-        "function"
-    ) {
-
+    if (typeof newWord === "function") {
         newWord();
-
     }
-
 }
 
 /* ===================================== */
 /* MENU */
 /* ===================================== */
-
 function backToMenu() {
-
-    if (
-        typeof stopTimer ===
-        "function"
-    ) {
-
+    if (typeof stopTimer === "function") {
         stopTimer();
-
     }
-
-    showScreen(
-        menuScreen
-    );
-
+    showScreen(menuScreen);
 }
 
 /* ===================================== */
 /* GAME OVER */
 /* ===================================== */
-
 function endGame(winner) {
-
-    if (
-        typeof stopTimer ===
-        "function"
-    ) {
-
+    if (typeof stopTimer === "function") {
         stopTimer();
-
     }
 
-    if (
-        winnerName
-    ) {
-
-        winnerName.textContent =
-            winner;
-
+    if (winnerName) {
+        winnerName.textContent = winner;
     }
 
-    showScreen(
-        winnerScreen
-    );
-
+    showScreen(winnerScreen);
 }
 
 /* ===================================== */
 /* PLAY AGAIN */
 /* ===================================== */
-
 function playAgain() {
-
-    if (
-        typeof stopTimer ===
-        "function"
-    ) {
-
+    if (typeof stopTimer === "function") {
         stopTimer();
-
     }
 
-    if (
-        typeof resetScores ===
-        "function"
-    ) {
-
+    if (typeof resetScores === "function") {
         resetScores();
-
     }
 
-    if (
-        typeof resetTeams ===
-        "function"
-    ) {
-
+    if (typeof resetTeams === "function") {
         resetTeams();
-
     }
 
-    if (
-        typeof resetGameData ===
-        "function"
-    ) {
-
+    if (typeof resetGameData === "function") {
         resetGameData();
-
     }
 
-    showScreen(
-        menuScreen
-    );
-
+    showScreen(menuScreen);
 }
