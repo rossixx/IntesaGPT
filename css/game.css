@@ -320,6 +320,20 @@
 #wordDisplay.words-sides {
     justify-content: space-between;
     padding: 0 8%; /* Spinge le parole verso i bordi. Aumenta o diminuisci la % se le vuoi più vicine/lontane */
+
+}
+
+/* Rotazione 3D aggressiva per le parole in Multiplayer */
+#wordDisplay.multiplayer-rotate .word-item:first-child {
+    transform: perspective(1000px) rotateY(45deg) !important;
+    transform-origin: left center !important;
+    display: inline-block !important;
+}
+
+#wordDisplay.multiplayer-rotate .word-item:last-child {
+    transform: perspective(1000px) rotateY(-45deg) !important;
+    transform-origin: right center !important;
+    display: inline-block !important;
 }
 
 /* Stile grafico del box che racchiude la parola */
