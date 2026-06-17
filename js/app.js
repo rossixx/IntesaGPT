@@ -77,7 +77,7 @@ function enterFullscreen() {
     const el = document.documentElement;
     if (el.requestFullscreen) {
         el.requestFullscreen().catch(err => {
-            console.log("Impossibile avviare il fullscreen di default: ", err);
+            console.log("Impossibile avviare il fullscreen: ", err);
         });
     }
 }
